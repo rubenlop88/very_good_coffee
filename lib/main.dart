@@ -247,7 +247,7 @@ class CoffeeImage extends StatelessWidget {
     return switch (state) {
       CoffeeImageLoaded() => CoffeeTile(coffee: state.currentCoffee),
       CoffeeImageInitial() || CoffeeImageLoading() => const Placeholder(),
-      CoffeeImageError() => const ErrorWidget(),
+      CoffeeImageError() => const Center(child: Text('Failed to load coffee')),
     };
   }
 }
