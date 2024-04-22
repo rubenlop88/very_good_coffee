@@ -26,15 +26,14 @@ class VeryGoodCoffeeApp extends StatelessWidget {
       create: (context) => CoffeeImageCubit(),
       child: BlocBuilder<CoffeeImageCubit, CoffeeImageState>(
         builder: (context, state) => FutureBuilder(
-          future: getColorScheme(state),
+          future: Future.wait([
+            getColorScheme(state, Brightness.light),
+            getColorScheme(state, Brightness.dark),
+          ]),
           builder: (context, snapshot) => MaterialApp(
             title: 'Very Good Coffee',
-            theme: ThemeData(colorScheme: snapshot.data),
-            darkTheme: ThemeData(
-              colorScheme: snapshot.data?.copyWith(
-                brightness: Brightness.dark,
-              ),
-            ),
+            theme: ThemeData(colorScheme: snapshot.data?[0]),
+            darkTheme: ThemeData(colorScheme: snapshot.data?[1]),
             home: const VeryGoodCoffeeHome(),
           ),
         ),
@@ -42,18 +41,16 @@ class VeryGoodCoffeeApp extends StatelessWidget {
     );
   }
 
-  Future<ColorScheme> getColorScheme(CoffeeImageState state) {
+  Future<ColorScheme> getColorScheme(CoffeeImageState state, Brightness brightness) {
     if (state.currentCoffee.isNotEmpty) {
       return ColorScheme.fromImageProvider(
-        brightness: PlatformDispatcher.instance.platformBrightness,
-        provider: CachedNetworkImageProvider(
-          state.currentCoffee,
-        ),
+        brightness: brightness,
+        provider: CachedNetworkImageProvider(state.currentCoffee),
       );
     }
     return Future.value(
       ColorScheme.fromSeed(
-        brightness: PlatformDispatcher.instance.platformBrightness,
+        brightness: brightness,
         seedColor: Colors.deepPurple,
       ),
     );
