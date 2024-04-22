@@ -2,15 +2,23 @@
 
 Very Good Coffee App
 
-## Getting Started
+In this app you can get a random coffee image and add it to your list 
+of favorite coffee images. You can also remove the coffee image from your list
+by tapping on the image and selecting the remove option.
 
-This project is a starting point for a Flutter application.
+The app supports dark mode and light mode. The colors of the app change based on
+the selected coffee image.
 
-A few resources to get you started if this is your first Flutter project:
+The app works offline by using the packages `hydrated_cubit`, which saves te list of favorite images and the current
+image to local storage, and `cached_network_image`, which caches the downloaded images on the device.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Run app
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run lib/main.dart
+```
+
+## Run tests
+```bash
+flutter test integration_test
+```
